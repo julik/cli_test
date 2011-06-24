@@ -4,7 +4,8 @@ require "tempfile"
 
 class TestCliTest < Test::Unit::TestCase
   class InProcess < CLITest
-    def non_unix?
+    
+    def not_unix?
       true
     end
   end
