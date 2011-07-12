@@ -4,7 +4,6 @@ require "tempfile"
 
 class TestCliTest < Test::Unit::TestCase
   class InProcess < CLITest
-    
     def not_unix?
       true
     end
@@ -71,6 +70,21 @@ class TestCliTest < Test::Unit::TestCase
     @app = InProcess.new(f.path)
     s, o, e = @app.run("")
     assert_equal 12, s, "Should pass the proper exit status"
+  end
+  
+  def test_cli_captures_exceptions_and_reroutes_them_to_stderr_with_inprocess
+    f = make_tempfile
+    f.puts('#!/usr/bin/env ruby')
+    f.puts("raise 'Disaster strikes!'")
+    f.chmod(0x777)
+    f.flush
+    
+    @app = InProcess.new(f.path)
+    assert_nothing_raised("Raised error should be swallowed into STDERR") do
+      s, o, e = @app.run('')
+      assert_equal 1, s, "Should have simulated an exit with status 1"
+      assert_match /Disaster strikes/, e, "Exception should have been flushed into STDERR"
+    end
   end
   
   def test_cli_returns_stderr_with_inprocess

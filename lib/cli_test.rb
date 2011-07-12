@@ -6,7 +6,7 @@ rescue LoadError
 end
 
 class CLITest
-  VERSION = '1.0.0'
+  VERSION = '1.0.1'
   
   def initialize(binary_path)
     @binary_path = File.expand_path(binary_path)
@@ -38,10 +38,14 @@ class CLITest
       $VERBOSE = false
       
       load(@binary_path)
-      
       return [0, os.string, es.string]
+      
     rescue SystemExit => boom # The binary uses exit(), we use that to preserve the output code
       return [boom.status, os.string, es.string]
+    rescue Exception => e
+      es.puts(e.class)
+      es.puts(e.exception)
+      return [1, os.string, es.string]
     ensure
       $VERBOSE = verbosity
       ARGV.replace(old_argv)
