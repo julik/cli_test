@@ -17,14 +17,6 @@ Uses in-process loading on non-forking architectures
   out #=> "ruby 1.9.2p180 (2011-02-18 revision 30909) [i386-darwin9.8.0]\n"
   assert_match /revision/, out, "Should output revision information"
 
-== REQUIREMENTS:
-
-* FIX (list of requirements)
-
-== INSTALL:
-
-* FIX (sudo gem install, anything else)
-
 == LICENSE:
 
 (The MIT License)
