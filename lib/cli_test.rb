@@ -6,7 +6,7 @@ rescue LoadError
 end
 
 class CLITest
-  VERSION = '1.0.1'
+  VERSION = '2.0.0'
   
   def initialize(binary_path)
     @binary_path = File.expand_path(binary_path)
@@ -17,15 +17,8 @@ class CLITest
     (not_unix? || !ruby19?) ? in_process(arguments_as_argv) : in_fork(arguments_as_argv)
   end
   
-  def not_unix?
-    RUBY_PLATFORM =~ /mswin|jruby/
-  end
+  private
   
-  
-  def ruby19?
-    !(RUBY_VERSION < "1.9")
-  end
-    
   # Run the binary under test with passed options, and return [exit_code, stdout_content, stderr_content]
   # There is a limitation however: your app should be using $stdout and $stdeer and NOT their constant
   # equivalents.
@@ -80,5 +73,14 @@ class CLITest
   def make_signed(retcode)
     ((retcode > 128)) && ((retcode = retcode - 256))
     retcode
+  end
+  
+  
+  def not_unix?
+    RUBY_PLATFORM =~ /mswin|jruby/
+  end
+  
+  def ruby19?
+    !(RUBY_VERSION < "1.9")
   end
 end
