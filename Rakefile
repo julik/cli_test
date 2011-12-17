@@ -1,11 +1,28 @@
 # -*- ruby -*-
 
-require 'rubygems'
-require 'hoe'
+require './lib/cli_test'
+require 'jeweler'
 
-Hoe.spec 'cli_test' do | s |
-  s.developer('Julik Tarkhanov', 'me@julik.nl')
-  s.readme_file = 'README.rdoc'
+Jeweler::Tasks.new do |gem|
+  gem.version = CLITest::VERSION
+  gem.name = "cli_test"
+  gem.summary = "Runs commandline binaries from your test suite"
+  gem.email = "me@julik.nl"
+  gem.homepage = "http://github.com/julik/cli_test"
+  gem.authors = ["Julik Tarkhanov"]
+  
+  # Do not package invisibles
+  gem.files.exclude ".*"
 end
 
-# vim: syntax=ruby
+Jeweler::RubygemsDotOrgTasks.new
+
+require 'rake/testtask'
+desc "Run all tests"
+Rake::TestTask.new("test") do |t|
+  t.libs << "test"
+  t.pattern = 'test/**/test_*.rb'
+  t.verbose = true
+end
+
+task :default => [ :test ]
