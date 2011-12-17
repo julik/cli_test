@@ -13,9 +13,9 @@ Uses in-process loading on non-forking architectures
 == SYNOPSIS:
 
   @app = CLITest.new("/usr/local/bin/ruby")
-	status, out, err = @app.run("--version")
-	out #=> "ruby 1.9.2p180 (2011-02-18 revision 30909) [i386-darwin9.8.0]\n"
-	assert_match /revision/, out, "Should output revision information"
+  status, out, err = @app.run("--version")
+  out #=> "ruby 1.9.2p180 (2011-02-18 revision 30909) [i386-darwin9.8.0]\n"
+  assert_match /revision/, out, "Should output revision information"
 
 == REQUIREMENTS:
 
